@@ -85,13 +85,17 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        //every axis
         Vector3 movementDirection = transform.right * x + transform.forward * z;
+        //just forward
+        //Vector3 movementDirection =  transform.forward * z;
 
         //movement 
         charController.Move(movementDirection * speed * Time.deltaTime);
 
         //if player has a movement at that moment
-        if (!anim.GetBool("Jump") && (x != 0 || z != 0))
+        //x != 0 || if i want to add horizontal check Dont forget
+        if (!anim.GetBool("Jump") && ( z != 0))
         {
             if (!isHolding) //walking or running normaly
             {

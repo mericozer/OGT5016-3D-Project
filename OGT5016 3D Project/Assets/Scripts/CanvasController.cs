@@ -26,7 +26,8 @@ public class CanvasController : MonoBehaviour
 
      [SerializeField] private GameObject pausePanel; 
      [SerializeField] private GameObject winPanel;
-     [SerializeField] private GameObject losePanel;
+     [SerializeField] private GameObject batteryLosePanel;
+     [SerializeField] private GameObject failLosePanel;
      [SerializeField] private GameObject filler; //batter slider filler image
      
      private Color red; //battery low percentage color
@@ -114,7 +115,7 @@ public class CanvasController : MonoBehaviour
 
         if (battery.value <= 0)
         {
-            LoseState();
+            BatteryLoseState();
         }
         
         //battery color change based on its percantage, it is a checker for that action
@@ -134,11 +135,20 @@ public class CanvasController : MonoBehaviour
     }
     
     //lose panel opens, game world stops
-    public void LoseState()
+    public void BatteryLoseState()
     {
         Time.timeScale = 0;
         isGameRunning = false;
-        losePanel.SetActive(true);
+        batteryLosePanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        
+    }
+    
+    public void FailLoseState()
+    {
+        Time.timeScale = 0;
+        isGameRunning = false;
+        failLosePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         
     }

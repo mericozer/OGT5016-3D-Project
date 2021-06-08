@@ -53,7 +53,7 @@ public class ButtonActivation : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CanvasController.instance.CustomInteractiveText(false, "Press E for Button");
-            playerNear = true;
+            playerNear = false;
         }
     }
 
