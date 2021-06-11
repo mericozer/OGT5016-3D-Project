@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class HolderController : MonoBehaviour
 {
+    public enum CubeColor
+    {
+        None,
+        Red,
+        Green,
+        Yellow,
+        Blue
+    }
+
+    public CubeColor rightColor;
+    
     //Script for cube placement holders
     
     [SerializeField] private Transform holderPoint; //cubes stands in this point
@@ -64,29 +75,39 @@ public class HolderController : MonoBehaviour
         if (!filled && !done)
         {
             obj = PlayerController.instance.holdingObject; //takes object
+
+            if (obj.GetComponent<InteractableItem>().cubeColor.Equals(rightColor))
+            {
+                obj.transform.position = holderPoint.position; //change the position of the object
             
-            obj.transform.position = holderPoint.position; //change the position of the object
+                obj.transform.parent = gameObject.transform; //makes the box object a child of the holder
             
-            obj.transform.parent = gameObject.transform; //makes the box object a child of the holder
+                obj.GetComponent<InteractableItem>().Hold = false; //checks if box is in hold state
             
-            obj.GetComponent<InteractableItem>().Hold = false; //checks if box is in hold state
+                obj.GetComponent<InteractableItem>().PlayerNear = false; //checks if player is holding
             
-            obj.GetComponent<InteractableItem>().PlayerNear = false; //checks if player is holding
+                PlayerController.instance.holdingObject = null; //player doesnt have the box object as child
             
-            PlayerController.instance.holdingObject = null; //player doesnt have the box object as child
+                CanvasController.instance.HolderText(true); 
             
-            CanvasController.instance.HolderText(true); 
+                PlayerController.instance.PutObject(); //makes player put the object
             
-            PlayerController.instance.PutObject(); //makes player put the object
+                PlacementCheck.instance.UpdateCounter(1); //all holders connected to one controller and it looks if all the holders are filled or not
             
-            PlacementCheck.instance.UpdateCounter(1); //all holders connected to one controller and it looks if all the holders are filled or not
-            
-            boxColor = obj.GetComponent<InteractableItem>().cubeColor.ToString(); //takes box color
+                boxColor = obj.GetComponent<InteractableItem>().cubeColor.ToString(); //takes box color
            
-            done = true;
+                done = true;
             
-            StartCoroutine(Delay());
+                StartCoroutine(Delay());
+            }
+            else
+            {
+                CanvasController.instance.FailLoseState();
+            }
+            
+           
         }
+        /*
         else if(filled)
         {
             //makes object players child again
@@ -99,7 +120,7 @@ public class HolderController : MonoBehaviour
             obj.GetComponent<InteractableItem>().HoldState();
             PlayerController.instance.HoldObject(obj);
             PlacementCheck.instance.UpdateCounter(-1);
-        }
+        }*/
 
     }
 

@@ -11,6 +11,7 @@ public class ButtonActivation : MonoBehaviour
     public UnityEvent OnPressEvent;
 
     private bool playerNear = false;
+    private bool isPressed = false;
     
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
@@ -33,14 +34,19 @@ public class ButtonActivation : MonoBehaviour
             //Works with pressing E when near to the button
             if (Input.GetKeyDown(KeyCode.E))
             {
-                OnPressEvent.Invoke();
+                if (!isPressed)
+                {
+                    OnPressEvent.Invoke();
+                    isPressed = true;
+                }
+                
             }
         }
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !isPressed)
         {
             CanvasController.instance.CustomInteractiveText(true, "Press E for Button");
             playerNear = true;
