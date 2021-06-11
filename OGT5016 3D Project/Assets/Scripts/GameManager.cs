@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     private float savedBatteryPercentage = 300;
     private int currentLevel = 1;
 
+    public int serialNumber;
+
     //saved position
     public Vector3 savedPos;
 
@@ -56,7 +58,10 @@ public class GameManager : MonoBehaviour
                
                 PlayerPrefs.SetInt("CurrentLevel", 1);
                 currentLevel = PlayerPrefs.GetInt("CurrentLevel");
-               
+
+                 PlayerPrefs.SetInt("SerialNumber", 1);
+                 serialNumber = PlayerPrefs.GetInt("SerialNumber");
+
             }
             else
             {
@@ -73,7 +78,7 @@ public class GameManager : MonoBehaviour
                 PlayerPrefs.SetFloat("YPosition", initialPositionY);
                 PlayerPrefs.SetFloat("ZPosition", initialPositionZ);
             }
-            else //load the saved percentage and positions
+            /* else //load the saved percentage and positions
             {
                
                 savedBatteryPercentage = PlayerPrefs.GetFloat("BatteryPercentage");
@@ -85,7 +90,7 @@ public class GameManager : MonoBehaviour
                 savedPos = new Vector3(savedPositionX, savedPositionY, savedPositionZ);
 
                 player.transform.position = savedPos;
-            }
+            }*/
 
         }
         //if it is a menu
@@ -139,7 +144,11 @@ public class GameManager : MonoBehaviour
     //restarts the level with deleting saved data
     public void Restart()
     {
+        int serial = PlayerPrefs.GetInt("SerialNumber") + 1;
+        int scene = SceneManager.GetActiveScene().buildIndex;
         DeleteSaves();
+        PlayerPrefs.SetInt("CurrentLevel", scene);
+        PlayerPrefs.SetInt("SerialNumber", serial);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

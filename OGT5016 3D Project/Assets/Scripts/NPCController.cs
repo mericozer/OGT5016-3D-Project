@@ -17,12 +17,29 @@ public class NPCController : MonoBehaviour
    // [SerializeField] private Transform lookAtPoint; 
 
     private bool playerNear = false;
+
+    [SerializeField] private List<int> serialNumberDialogIndex = new List<int>();
     
     // Start is called before the first frame update
     void Start()
     {
         
         NPCName.text = dialog.name;
+
+        int serialNumber =  PlayerPrefs.GetInt("SerialNumber");
+
+        string name = "Virtus-" + CreateSerialNumber(serialNumber);
+        //string name = "test";
+        for (int i = 0; i < dialog.sentences.Length; i++)
+        {
+            if (dialog.sentences[i].Contains("nameText"))
+            {
+                //int index = dialog.sentences[i].IndexOf("nameText");
+                dialog.sentences[i] = dialog.sentences[i].Replace("nameText", name);
+
+
+            }
+        }
     }
 
     // Update is called once per frame
@@ -63,6 +80,27 @@ public class NPCController : MonoBehaviour
             playerNear = false;
             PlayerPrefs.SetInt("Talk", 1);
         }
+    }
+    
+    private string CreateSerialNumber(int number)
+    {
+        if (number >= 1000)
+        {
+            return number.ToString();
+        }
+        else if(number >= 100)
+        {
+            return "0" + number.ToString();
+        }
+        else if(number >= 10)
+        {
+            return "00" + number.ToString();
+        }
+        else
+        {
+            return "000" + number.ToString();
+        }
+        
     }
     
    

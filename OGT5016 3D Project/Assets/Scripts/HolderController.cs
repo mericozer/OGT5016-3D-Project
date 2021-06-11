@@ -49,7 +49,7 @@ public class HolderController : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !done)
         {
             CanvasController.instance.HolderText(filled);
             playerNear = true;
@@ -76,7 +76,7 @@ public class HolderController : MonoBehaviour
         {
             obj = PlayerController.instance.holdingObject; //takes object
 
-            if (obj.GetComponent<InteractableItem>().cubeColor.Equals(rightColor))
+            if (obj.GetComponent<InteractableItem>().cubeColor.ToString().Equals(rightColor.ToString()))
             {
                 obj.transform.position = holderPoint.position; //change the position of the object
             
@@ -97,6 +97,8 @@ public class HolderController : MonoBehaviour
                 boxColor = obj.GetComponent<InteractableItem>().cubeColor.ToString(); //takes box color
            
                 done = true;
+                
+                CanvasController.instance.HolderText(true);
             
                 StartCoroutine(Delay());
             }
