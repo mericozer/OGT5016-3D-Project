@@ -13,7 +13,7 @@ public class PuzzleRoomController : MonoBehaviour
     
     [SerializeField] List<SoundButtonEnum> buttonList = new List<SoundButtonEnum>();
     [SerializeField] private List<SoundButtonEnum> orderList = new List<SoundButtonEnum>();
-    
+    public List<int> orderNumber = new List<int>();
     
     public UnityEvent OnPressEvent;
     [System.Serializable]
@@ -26,9 +26,10 @@ public class PuzzleRoomController : MonoBehaviour
     void Start()
     {
         current = 0;
-        
+        int counter = 1;
         for (int i = 0; i < 5; i++)
         {
+            counter = 1;
             foreach (var button in buttonList)
             {
                 Debug.Log("turning");
@@ -37,8 +38,11 @@ public class PuzzleRoomController : MonoBehaviour
                 {
                     Debug.Log((int)button.buttonOrder);
                     orderList.Add(button);
+                    orderNumber.Add(counter);
                     break;
                 }
+
+                counter++;
             }
         }
 

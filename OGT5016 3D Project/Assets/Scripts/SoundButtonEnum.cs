@@ -15,15 +15,22 @@ public class SoundButtonEnum : MonoBehaviour
 
     public Order buttonOrder;
 
+    public AudioSource soundSource;
+    //public AudioClip[] audioList;
+
+    [SerializeField] private Material activeMat;
+
+    [SerializeField] private GameObject button;
     public bool isTurn;
     public bool isPressed = false;
     private bool playerNear;
+    private bool isActive = false;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        soundSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,19 +38,27 @@ public class SoundButtonEnum : MonoBehaviour
     {
         if (playerNear)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (isActive)
             {
-                if (isTurn)
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    isPressed = true;
-                    //TO DO
-                    //sound play
-                }
-                else
-                {
-                    CanvasController.instance.FailLoseState();
-                }
+                    if (isTurn)
+                    {
+                        isPressed = true;
+                        //TO DO
+                        soundSource.Play();
+                    }
+                    else
+                    {
+                        CanvasController.instance.FailLoseState();
+                    }
+                }  
             }
+            else
+            {
+                button.GetComponent<MeshRenderer>().material = activeMat;
+            }
+            
         }
     }
     
