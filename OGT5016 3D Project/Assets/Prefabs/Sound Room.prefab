@@ -923,7 +923,7 @@ MonoBehaviour:
   buttonOrder: 0
   soundSource: {fileID: 0}
   activeMat: {fileID: 2100000, guid: 9a09a1e48404c3c41b9637d96b33edc4, type: 2}
-  button: {fileID: 2366127286761055433}
+  button: {fileID: 2366127288290067983}
   isTurn: 0
   isPressed: 0
 --- !u!82 &4477179742633732307

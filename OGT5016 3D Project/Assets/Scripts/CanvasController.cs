@@ -15,11 +15,17 @@ public class CanvasController : MonoBehaviour
     private int batteryColorValue = 0;
     
     private bool isGameRunning = true; //checks if game is running
+    private bool isShootingActive = false;
+    public bool shootingStart = false;
+    private bool shootUp = true;
     
      [SerializeField] private Slider battery; //slider for battery(health)
+     [SerializeField] private Slider shootSlider;
      
      private float batteryPercantage; //holds battery value;
+     private float shootSliderSpeed;
      [SerializeField] private float maxBatteryValue = 100f; //max value for battery
+     [SerializeField] private float shootSliderValue = 0f;
      
      [SerializeField] private TMP_Text interactableText; //Shows up when player gets near to the interactible object
      [SerializeField] private TMP_Text pausedText; //pause screen text
@@ -29,6 +35,7 @@ public class CanvasController : MonoBehaviour
      [SerializeField] private GameObject batteryLosePanel;
      [SerializeField] private GameObject failLosePanel;
      [SerializeField] private GameObject filler; //batter slider filler image
+     [SerializeField] private GameObject shootSliderObject;
      
      private Color red; //battery low percentage color
      private Color yellow; //battery medium percentage color
@@ -49,6 +56,9 @@ public class CanvasController : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+
+        shootSlider = shootSliderObject.GetComponent<Slider>();
+        shootSliderSpeed = shootSlider.maxValue / 1;
         
         battery.maxValue = maxBatteryValue;
         //save system will be added
@@ -94,7 +104,19 @@ public class CanvasController : MonoBehaviour
                 ContinueGame();
             }
         }
-        
+
+        if (isShootingActive)
+        {
+            if (!shootingStart)
+            {
+                shootSliderObject.SetActive(true);
+                shootSliderValue = 0f;
+                shootSlider.value = shootSliderValue;
+                
+            }
+            
+            ShootingBar();
+        }
     }
 
     //updates battery percentage every second
@@ -121,8 +143,49 @@ public class CanvasController : MonoBehaviour
         //battery color change based on its percantage, it is a checker for that action
         ColorValueChecker();
         
-
     }
+
+    public void ActivateShooting()
+    {
+        shootSliderObject.SetActive(true);
+        isShootingActive = true;
+        shootingStart = true;
+    }
+    public void ShootingBar()
+    {
+        if (shootUp)
+        {
+            shootSliderValue += Time.deltaTime * shootSliderSpeed;
+            shootSlider.value = shootSliderValue;
+
+            if (shootSliderValue >= 100)
+            {
+                shootUp = false;
+            }
+        }
+        else
+        {
+            shootSliderValue -= Time.deltaTime * shootSliderSpeed;
+            shootSlider.value = shootSliderValue;
+            
+            if (shootSliderValue <= 0)
+            {
+                shootUp = true;
+            }
+        }
+       
+    }
+
+    public float GetShootValue()
+    {
+        //delay for slider can be activated
+        shootSliderObject.SetActive(false);
+        isShootingActive = false;
+        shootingStart = false;
+        shootUp = true;
+        return shootSliderValue;
+    }
+    
 
     //win panel opens, game world stops
     public void WinState()

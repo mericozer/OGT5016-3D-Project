@@ -38,9 +38,9 @@ public class SoundButtonEnum : MonoBehaviour
     {
         if (playerNear)
         {
-            if (isActive)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (isActive)
                 {
                     if (isTurn)
                     {
@@ -52,11 +52,15 @@ public class SoundButtonEnum : MonoBehaviour
                     {
                         CanvasController.instance.FailLoseState();
                     }
-                }  
-            }
-            else
-            {
-                button.GetComponent<MeshRenderer>().material = activeMat;
+                      
+                }
+                else
+                {
+                    button.GetComponent<MeshRenderer>().material = activeMat;
+                    soundSource.Play();
+                    isActive = true;
+                }
+                
             }
             
         }
