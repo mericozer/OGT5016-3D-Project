@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class ShootingBall : MonoBehaviour
 {
+    public enum BallColor
+    {
+        None,
+        Red,
+        Green,
+        Yellow,
+        Blue
+    }
+
+    public BallColor color;
+    
     private bool playerNear = false;
     private bool inSequence = false;
 
     [SerializeField] private Collider coll;
+
+    [SerializeField] private ShootProjection projection;
 
     private Rigidbody rb;
     // Start is called before the first frame update
@@ -29,10 +42,17 @@ public class ShootingBall : MonoBehaviour
                     //start shooting sequence
                     HoldState();
                     CanvasController.instance.ActivateShooting();
+                    //projection.enabled = true;
+                    projection.ActivateLine();
+                    
                 }
                 else
                 {
                     inSequence = false;
+                    PlayerController.instance.PutObject();
+                    gameObject.transform.parent = null;
+                    coll.enabled = true;
+                    CanvasController.instance.CustomInteractiveText(true, "'E' to hold the ball");
                     //stop shooting sequence
                 }
                 
@@ -43,6 +63,10 @@ public class ShootingBall : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Shoot();
+                    projection.CleanLine();
+                    //projection.enabled = false;
+                    StartCoroutine(ShootDelay());
+
                 }
             }
         }
@@ -50,27 +74,30 @@ public class ShootingBall : MonoBehaviour
     
     public void HoldState()
     {
-        PlayerController.instance.HoldObject(gameObject);
-        rb.useGravity = false;
-        //coll.enabled = false;
-        //CanvasController.instance.InteractableText(false);
+        PlayerController.instance.HoldShootingObject(gameObject);
+       // rb.useGravity = false;
+       
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        coll.enabled = false;
+        CanvasController.instance.CustomInteractiveText(true, "'Space' to shoot the ball");
         // StartCoroutine(HoldDelay());
     }
 
     private void Shoot()
     {
-        rb.useGravity = true;
-        gameObject.transform.parent = null;
-        Rigidbody instBulletRB = gameObject.GetComponent<Rigidbody>();
+        //rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.None;
         float shootSpeed = CanvasController.instance.GetShootValue();
-        instBulletRB.AddForce(transform.forward * shootSpeed * 10f, ForceMode.Force);
+        rb.velocity = (transform.forward * 60 * 0.5f);
+        //rb.AddForce(transform.forward * shootSpeed * 0.5f, ForceMode.Impulse);
+        gameObject.transform.parent = null;
     }
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            CanvasController.instance.InteractableText(true);
+            CanvasController.instance.CustomInteractiveText(true, "'E' to hold the ball");
             playerNear = true;
         }
     }
@@ -79,8 +106,14 @@ public class ShootingBall : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            CanvasController.instance.InteractableText(false);
+            CanvasController.instance.CustomInteractiveText(false, "'E' to hold the ball");
             playerNear = false;
         }
+    }
+
+    private IEnumerator ShootDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PlayerController.instance.PutObject();
     }
 }

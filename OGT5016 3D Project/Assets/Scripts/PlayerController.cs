@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Transform groundCheck; //extra object under the player for ground check
     [SerializeField] private Transform holdingPoint; //point where boxes stands while holding
+    [SerializeField] private Transform shootingPoint; //point where boxes stands while holding
     public GameObject holdingObject;
     
     Vector3 velocity;
@@ -226,6 +227,16 @@ public class PlayerController : MonoBehaviour
         holdingObject = obj;
         obj.transform.parent = gameObject.transform;
         obj.transform.position = holdingPoint.position;
+        anim.SetBool("Hold", true);
+        isHolding = true;
+    }
+    
+    public void HoldShootingObject(GameObject obj)
+    {
+        holdingObject = obj;
+        obj.transform.parent = shootingPoint;
+        obj.transform.position = shootingPoint.position;
+        obj.transform.rotation = shootingPoint.rotation;
         anim.SetBool("Hold", true);
         isHolding = true;
     }

@@ -18,7 +18,7 @@ public class ThirdPersonCamera : MonoBehaviour
         //checks if there is a saved game
         //if there is puts the camera to saved position
         
-        if (!PlayerPrefs.HasKey("cameraX"))
+       /* if (!PlayerPrefs.HasKey("cameraX"))
         {
             offset = transform.position - player.position;
             PlayerPrefs.SetFloat("cameraX",offset.x);
@@ -32,8 +32,11 @@ public class ThirdPersonCamera : MonoBehaviour
             y = PlayerPrefs.GetFloat("cameraY");
             z = PlayerPrefs.GetFloat("cameraZ");
             offset = new Vector3(x, y, z);
-        }
+        }*/
 
+       //without save close it after development
+       offset = transform.position - player.position;
+      
         
     }
 
