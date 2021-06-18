@@ -18,60 +18,86 @@ public class ColorChecker : MonoBehaviour
     private List<int> selectedColors = new List<int>();
 
     private int counter;
-    
+
+    private Material currentMaterial;
     [SerializeField] private Material redMat;
     [SerializeField] private Material greenMat;
     [SerializeField] private Material yellowMat;
     [SerializeField] private Material blueMat;
-    
+
+    [SerializeField] private MovePanel door;
+
+    private float lerp;
+    private float colorChangeDuration = 0.3f;
+
+    private float startTime;
     // Start is called before the first frame update
     void Start()
     {
+        startTime = Time.time;
         AdjustColor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (counter >= 4)
+        /*lerp = (Time.time - startTime) * colorChangeDuration;
+        gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, blueMat, lerp);
+        if (lerp >= 1)
         {
-            //TO DO
-            //OPEN DOOR
-            Debug.Log("DOOR OPENED");
-        }
+            Debug.Log("birbirbirbir");
+        }*/
+        
     }
 
     void AdjustColor()
     {
-        int color = Random.Range(1, 5);
-
-        while (selectedColors.Contains(color))
+        if (counter < 4)
         {
-            color = Random.Range(1, 5);
+            int color = Random.Range(1, 5);
+
+            while (selectedColors.Contains(color))
+            {
+                color = Random.Range(1, 5);
+            }
+       
+            lerp = Mathf.PingPong(Time.time, colorChangeDuration) / colorChangeDuration;
+            selectedColors.Add(color);
+            switch (color)
+            {
+                case 1:
+                    gameObject.GetComponent<MeshRenderer>().material = redMat;
+                    //gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, redMat, lerp);
+                    currentMaterial = redMat;
+                    currentColor = BallColor.Red;
+                    break;
+                case 2:
+                    gameObject.GetComponent<MeshRenderer>().material = greenMat;
+                    //gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, greenMat, lerp);
+                    currentMaterial = greenMat;
+                    currentColor = BallColor.Green;
+                    break;
+                case 3:
+                    gameObject.GetComponent<MeshRenderer>().material = yellowMat;
+                    //gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, yellowMat, lerp);
+                    currentMaterial = yellowMat;
+                    currentColor = BallColor.Yellow;
+                    break;
+                case 4:
+                    gameObject.GetComponent<MeshRenderer>().material = blueMat;
+                    //gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, blueMat, lerp);
+                    currentMaterial = blueMat;
+                    currentColor = BallColor.Blue;
+                    break;
+
+            }
+
+        }
+        else
+        {
+            door.ActivateObject();
         }
        
-        selectedColors.Add(color);
-        switch (color)
-        {
-            case 1:
-                gameObject.GetComponent<MeshRenderer>().material = redMat;
-                currentColor = BallColor.Red;
-                break;
-            case 2:
-                gameObject.GetComponent<MeshRenderer>().material = greenMat;
-                currentColor = BallColor.Green;
-                break;
-            case 3:
-                gameObject.GetComponent<MeshRenderer>().material = yellowMat;
-                currentColor = BallColor.Yellow;
-                break;
-            case 4:
-                gameObject.GetComponent<MeshRenderer>().material = blueMat;
-                currentColor = BallColor.Blue;
-                break;
-
-        }
-
     }
     
     private void OnTriggerEnter(Collider other)

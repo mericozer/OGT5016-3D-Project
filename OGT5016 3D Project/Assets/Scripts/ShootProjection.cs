@@ -16,6 +16,8 @@ public class ShootProjection : MonoBehaviour
 
     [SerializeField] private Transform shotPoint;
 
+    [SerializeField] private float shootPower = 20;
+
     private bool shooting = false;
     // Start is called before the first frame update
     void Start()
@@ -35,7 +37,7 @@ public class ShootProjection : MonoBehaviour
             //cannon shot point
             Vector3 startingPosition = shotPoint.position;
             //cannon power
-            Vector3 startingVelocity = shotPoint.forward * 60 * 0.5f;
+            Vector3 startingVelocity = shotPoint.forward * shootPower;
 
             for (float t = 0; t < pointCount; t += timeBetweenPoints)
             {

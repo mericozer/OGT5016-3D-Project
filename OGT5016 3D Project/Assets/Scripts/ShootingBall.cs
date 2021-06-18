@@ -86,9 +86,10 @@ public class ShootingBall : MonoBehaviour
     private void Shoot()
     {
         //rb.useGravity = true;
+        playerNear = false;
         rb.constraints = RigidbodyConstraints.None;
         float shootSpeed = CanvasController.instance.GetShootValue();
-        rb.velocity = (transform.forward * 60 * 0.5f);
+        rb.velocity = (transform.forward * 30);
         //rb.AddForce(transform.forward * shootSpeed * 0.5f, ForceMode.Impulse);
         gameObject.transform.parent = null;
     }
