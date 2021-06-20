@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float mouseSensitivity = 300f;
     [SerializeField] float batteryNormalCost = -1f;
     [SerializeField] float batteryRunCost = -4f;
+    float x;
+    float z;
 
     private CharacterController charController;
 
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = false;
     private bool ground = true;
     private bool isHolding = false;
+    public bool isShooting = false;
     [SerializeField] private LayerMask groundLayer;
 
     public void Awake()
@@ -83,8 +86,17 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        if (!isShooting)
+        {
+            x = Input.GetAxis("Horizontal");
+            z = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            x = 0;
+            z = 0;
+        }
+        
 
         //every axis
         Vector3 movementDirection = transform.right * x + transform.forward * z;

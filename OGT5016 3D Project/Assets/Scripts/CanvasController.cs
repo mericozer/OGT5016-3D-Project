@@ -145,11 +145,11 @@ public class CanvasController : MonoBehaviour
         
     }
 
-    public void ActivateShooting()
+    public void ShootingState(bool isShooting)
     {
-        shootSliderObject.SetActive(true);
-        isShootingActive = true;
-        shootingStart = true;
+        shootSliderObject.SetActive(isShooting);
+        isShootingActive = isShooting;
+        shootingStart = isShooting;
     }
     public void ShootingBar()
     {
@@ -158,7 +158,7 @@ public class CanvasController : MonoBehaviour
             shootSliderValue += Time.deltaTime * shootSliderSpeed;
             shootSlider.value = shootSliderValue;
 
-            if (shootSliderValue >= 100)
+            if (shootSliderValue >= shootSlider.maxValue)
             {
                 shootUp = false;
             }

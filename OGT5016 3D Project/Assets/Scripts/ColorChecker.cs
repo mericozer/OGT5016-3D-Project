@@ -61,7 +61,7 @@ public class ColorChecker : MonoBehaviour
                 color = Random.Range(1, 5);
             }
        
-            lerp = Mathf.PingPong(Time.time, colorChangeDuration) / colorChangeDuration;
+            //lerp = Mathf.PingPong(Time.time, colorChangeDuration) / colorChangeDuration;
             selectedColors.Add(color);
             switch (color)
             {

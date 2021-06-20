@@ -17,6 +17,10 @@ public class ShootingBall : MonoBehaviour
     
     private bool playerNear = false;
     private bool inSequence = false;
+    private bool launched = false;
+    private bool inCircle = false;
+    
+    private float checkTime = 0f;
 
     [SerializeField] private Collider coll;
 
@@ -41,18 +45,15 @@ public class ShootingBall : MonoBehaviour
                     inSequence = true;
                     //start shooting sequence
                     HoldState();
-                    CanvasController.instance.ActivateShooting();
+                    CanvasController.instance.ShootingState(true);
                     //projection.enabled = true;
                     projection.ActivateLine();
                     
+
                 }
                 else
                 {
-                    inSequence = false;
-                    PlayerController.instance.PutObject();
-                    gameObject.transform.parent = null;
-                    coll.enabled = true;
-                    CanvasController.instance.CustomInteractiveText(true, "'E' to hold the ball");
+                    Put();
                     //stop shooting sequence
                 }
                 
@@ -64,9 +65,22 @@ public class ShootingBall : MonoBehaviour
                 {
                     Shoot();
                     projection.CleanLine();
+                    PlayerController.instance.isShooting = false;
                     //projection.enabled = false;
                     StartCoroutine(ShootDelay());
 
+                }
+            }
+        }
+
+        if (launched)
+        {
+            checkTime += Time.deltaTime;
+            if (checkTime > 10f)
+            {
+                if (!inCircle)
+                {
+                    CanvasController.instance.FailLoseState();
                 }
             }
         }
@@ -80,18 +94,39 @@ public class ShootingBall : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         coll.enabled = false;
         CanvasController.instance.CustomInteractiveText(true, "'Space' to shoot the ball");
+        PlayerController.instance.isShooting = true;
         // StartCoroutine(HoldDelay());
+    }
+
+    public void Put()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+        inSequence = false;
+        PlayerController.instance.PutObject();
+        gameObject.transform.parent = null;
+        coll.enabled = true;
+        projection.CleanLine();
+        CanvasController.instance.ShootingState(false);
+        CanvasController.instance.CustomInteractiveText(true, "'E' to hold the ball");
+        PlayerController.instance.isShooting = false;
     }
 
     private void Shoot()
     {
         //rb.useGravity = true;
         playerNear = false;
+        launched = true;
         rb.constraints = RigidbodyConstraints.None;
         float shootSpeed = CanvasController.instance.GetShootValue();
-        rb.velocity = (transform.forward * 30);
+        if (shootSpeed >= 26 && shootSpeed <= 34)
+        {
+            shootSpeed = 30;
+        }
+        Debug.Log("shoot power is: " + shootSpeed);
+        rb.velocity = (transform.forward * shootSpeed);
         //rb.AddForce(transform.forward * shootSpeed * 0.5f, ForceMode.Impulse);
         gameObject.transform.parent = null;
+        CanvasController.instance.CustomInteractiveText(false, "");
     }
     
     private void OnTriggerEnter(Collider other)
@@ -100,6 +135,11 @@ public class ShootingBall : MonoBehaviour
         {
             CanvasController.instance.CustomInteractiveText(true, "'E' to hold the ball");
             playerNear = true;
+        }
+
+        if (other.CompareTag("Circle"))
+        {
+            inCircle = true;
         }
     }
    
