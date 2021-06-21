@@ -13,6 +13,8 @@ public class ButtonActivation : MonoBehaviour
     private bool playerNear = false;
     private bool isPressed = false;
     
+    public AudioSource soundSource;
+    
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
     
@@ -23,6 +25,8 @@ public class ButtonActivation : MonoBehaviour
         {
             OnPressEvent = new UnityEvent();
         }
+
+        soundSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -38,6 +42,7 @@ public class ButtonActivation : MonoBehaviour
                 {
                     OnPressEvent.Invoke();
                     isPressed = true;
+                    soundSource.Play();
                 }
                 
             }

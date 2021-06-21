@@ -6,6 +6,7 @@ using UnityEngine;
 public class MainSoundButton : MonoBehaviour
 {
     [SerializeField] private Material greenMat;
+    private Material brownMat;
 
     [SerializeField] private GameObject button;
 
@@ -29,6 +30,8 @@ public class MainSoundButton : MonoBehaviour
     {
         soundSource = GetComponent<AudioSource>();
         soundOrder = roomController.orderNumber;
+
+        brownMat = button.GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class MainSoundButton : MonoBehaviour
     {
         if (playerNear)
         {
-            if (!isActive)
+            /*if (!isActive)
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
@@ -56,6 +59,24 @@ public class MainSoundButton : MonoBehaviour
                 //play sound
                 CanvasController.instance.UpdateBatteryPercentage(-10, true);
                 Debug.Log("Main Sound played multiple");
+            }*/
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                delayTime = 0f;
+                soundNumber = -1;
+                playing = true;
+                    
+                button.GetComponent<MeshRenderer>().material = greenMat;
+                
+                if (isActive)
+                {
+                    CanvasController.instance.UpdateBatteryPercentage(-10, true);
+                }
+                else
+                {
+                    isActive = true;
+                }
             }
         }
 
@@ -77,6 +98,7 @@ public class MainSoundButton : MonoBehaviour
                     delayTime = 0f;
                     soundNumber = -1;
                     playing = false;
+                    button.GetComponent<MeshRenderer>().material = brownMat;
                 }
                 
             }

@@ -83,7 +83,7 @@ public class MovePanel : MonoBehaviour
             {
                 if (haveSound)
                 {
-                    soundSource.PlayOneShot(audioList[1]); //just for the button sound in level, not a general code
+                   // soundSource.PlayOneShot(audioList[1]); //just for the button sound in level, not a general code
                     soundSource.PlayOneShot(audioList[0]); //movement sound
                     haveSound = false;
                 }

@@ -18,6 +18,7 @@ public class CanvasController : MonoBehaviour
     private bool isShootingActive = false;
     public bool shootingStart = false;
     private bool shootUp = true;
+    [SerializeField] private bool haveShootBar;
     
      [SerializeField] private Slider battery; //slider for battery(health)
      [SerializeField] private Slider shootSlider;
@@ -57,8 +58,12 @@ public class CanvasController : MonoBehaviour
     {
         Time.timeScale = 1;
 
-        shootSlider = shootSliderObject.GetComponent<Slider>();
-        shootSliderSpeed = shootSlider.maxValue / 1;
+        if (haveShootBar)
+        {
+            shootSlider = shootSliderObject.GetComponent<Slider>();
+            shootSliderSpeed = shootSlider.maxValue / 1;
+        }
+        
         
         battery.maxValue = maxBatteryValue;
         //save system will be added
@@ -190,7 +195,7 @@ public class CanvasController : MonoBehaviour
     //win panel opens, game world stops
     public void WinState()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
         isGameRunning = false;
         winPanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -200,19 +205,19 @@ public class CanvasController : MonoBehaviour
     //lose panel opens, game world stops
     public void BatteryLoseState()
     {
-        Time.timeScale = 0;
         isGameRunning = false;
         batteryLosePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        
+        //Time.timeScale = 0;
     }
     
     public void FailLoseState()
     {
-        Time.timeScale = 0;
         isGameRunning = false;
         failLosePanel.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        //Time.timeScale = 0;
+       
         
     }
 
@@ -304,6 +309,10 @@ public class CanvasController : MonoBehaviour
             }
         }
     }
-    
+
+    public void GameOverTimeScale()
+    {
+        Time.timeScale = 0f;
+    }
 
 }

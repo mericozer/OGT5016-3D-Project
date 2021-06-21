@@ -18,13 +18,16 @@ public class SoundButtonEnum : MonoBehaviour
     public AudioSource soundSource;
     //public AudioClip[] audioList;
 
+    [SerializeField] private Material whiteMat;
     [SerializeField] private Material activeMat;
+    
 
     [SerializeField] private GameObject button;
     public bool isTurn;
     public bool isPressed = false;
     private bool playerNear;
     private bool isActive = false;
+    private bool firstListen = true;
     
     
     // Start is called before the first frame update
@@ -40,25 +43,45 @@ public class SoundButtonEnum : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (isActive)
+                if (isTurn)
                 {
-                    if (isTurn)
-                    {
-                        isPressed = true;
-                        //TO DO
-                        soundSource.Play();
-                    }
-                    else
-                    {
-                        CanvasController.instance.FailLoseState();
-                    }
-                      
+                    isPressed = true;
+                    soundSource.Play();
+                    isActive = true;
+                    button.GetComponent<MeshRenderer>().material = activeMat;
                 }
                 else
+                {
+                    CanvasController.instance.FailLoseState();
+                }
+                /*if (isActive)
+                {
+                    
+                      
+                }
+                else 
                 {
                     button.GetComponent<MeshRenderer>().material = activeMat;
                     soundSource.Play();
                     isActive = true;
+                }*/
+                
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                button.GetComponent<MeshRenderer>().material = activeMat;
+                StartCoroutine(ListenDelay());
+                
+                if (firstListen)
+                {
+                    firstListen = false;
+                    soundSource.Play();
+                }
+                else
+                {
+                    CanvasController.instance.UpdateBatteryPercentage(-10, true);
+                    soundSource.Play();
                 }
                 
             }
@@ -71,7 +94,15 @@ public class SoundButtonEnum : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerNear = true;
-            CanvasController.instance.CustomInteractiveText(true, "'E' to play sound");
+            if (!isActive)
+            {
+                CanvasController.instance.CustomInteractiveText(true, "'E' to activate | 'F' to listen");
+            }
+            else
+            {
+                CanvasController.instance.CustomInteractiveText(true, "");
+            }
+            
         }
     }
     
@@ -83,5 +114,11 @@ public class SoundButtonEnum : MonoBehaviour
             playerNear = false;
             CanvasController.instance.CustomInteractiveText(false, "'E' to play sound");
         }
+    }
+
+    IEnumerator ListenDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        button.GetComponent<MeshRenderer>().material = whiteMat;
     }
 }
