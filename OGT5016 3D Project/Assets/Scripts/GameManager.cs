@@ -155,7 +155,10 @@ public class GameManager : MonoBehaviour
     //loads the next scene
     public void NextScene()
     {
+        int scene = SceneManager.GetActiveScene().buildIndex;
+        PlayerPrefs.SetInt("CurrentLevel", scene + 1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+       
     }
 
     //opens main menu

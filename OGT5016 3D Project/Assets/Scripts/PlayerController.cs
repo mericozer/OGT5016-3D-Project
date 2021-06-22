@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform holdingPoint; //point where boxes stands while holding
     [SerializeField] private Transform shootingPoint; //point where boxes stands while holding
     public GameObject holdingObject;
+    public GameObject endingPanel;
     
     Vector3 velocity;
 
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         //if player has a movement at that moment
         //x != 0 || if i want to add horizontal check Dont forget
-        if (!anim.GetBool("Jump") && ( z != 0))
+        if (!anim.GetBool("Jump") && (x != 0 || z != 0))
         {
             if (!isHolding) //walking or running normaly
             {
@@ -225,6 +226,12 @@ public class PlayerController : MonoBehaviour
         {
             CanvasController.instance.WinState();
         }
+        
+        if (other.CompareTag("Ending"))
+        {
+            endingPanel.SetActive(true);
+            StartCoroutine(EndingDelay());
+        }
 
         if (other.CompareTag("Bullet"))
         {
@@ -279,5 +286,11 @@ public class PlayerController : MonoBehaviour
     {
         soundSourceWalk.Stop();
         soundSourceJump.Stop();
+    }
+
+    IEnumerator EndingDelay()
+    {
+        yield return new WaitForSeconds(0.8f);
+        GameManager.instance.NextScene();
     }
 }

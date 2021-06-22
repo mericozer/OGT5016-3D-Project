@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Ball
   - Circle
+  - Ending
   layers:
   - Default
   - TransparentFX

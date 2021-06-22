@@ -26,6 +26,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private GameObject shotPoint; //barrel point
     
     private bool isGoingInitial = true; //checks if ai goes to the initial patrol point
+    [SerializeField] private bool specialRange;
 
     private NavMeshAgent navAI;
 

@@ -23907,6 +23907,7 @@ MonoBehaviour:
   endPoint: {fileID: 243070005}
   electricBullet: {fileID: 0}
   shotPoint: {fileID: 0}
+  specialRange: 0
 --- !u!195 &419058610
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -38979,6 +38980,7 @@ MonoBehaviour:
   endPoint: {fileID: 243070005}
   electricBullet: {fileID: 0}
   shotPoint: {fileID: 0}
+  specialRange: 0
 --- !u!195 &1233246811
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -45352,6 +45354,7 @@ MonoBehaviour:
   holdingPoint: {fileID: 2048740417}
   shootingPoint: {fileID: 0}
   holdingObject: {fileID: 0}
+  endingPanel: {fileID: 0}
   isShooting: 0
   groundLayer:
     serializedVersion: 2
@@ -45945,6 +45948,7 @@ MonoBehaviour:
   holdingPoint: {fileID: 0}
   shootingPoint: {fileID: 0}
   holdingObject: {fileID: 0}
+  endingPanel: {fileID: 0}
   isShooting: 0
   groundLayer:
     serializedVersion: 2
@@ -47055,6 +47059,7 @@ MonoBehaviour:
   endPoint: {fileID: 243070005}
   electricBullet: {fileID: 0}
   shotPoint: {fileID: 0}
+  specialRange: 0
 --- !u!195 &1759064839
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -50733,7 +50738,7 @@ MonoBehaviour:
   haveShootBar: 0
   battery: {fileID: 1504493528}
   shootSlider: {fileID: 0}
-  maxBatteryValue: 300
+  maxBatteryValue: 420
   shootSliderValue: 0
   interactableText: {fileID: 239229952}
   pausedText: {fileID: 1400232815}

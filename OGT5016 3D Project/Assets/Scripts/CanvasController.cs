@@ -67,7 +67,8 @@ public class CanvasController : MonoBehaviour
         
         battery.maxValue = maxBatteryValue;
         //save system will be added
-        batteryPercantage = PlayerPrefs.GetFloat("BatteryPercentage"); //assign the saved value for battery
+        //batteryPercantage = PlayerPrefs.GetFloat("BatteryPercentage"); //assign the saved value for battery
+        batteryPercantage = maxBatteryValue;
         battery.value = batteryPercantage;
         
         
