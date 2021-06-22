@@ -222,12 +222,12 @@ public class PlayerController : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Finish"))
+        if (other.CompareTag("Finish")) //level endings
         {
             CanvasController.instance.WinState();
         }
         
-        if (other.CompareTag("Ending"))
+        if (other.CompareTag("Ending")) //last level ending
         {
             endingPanel.SetActive(true);
             StartCoroutine(EndingDelay());
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
         isHolding = true;
     }
     
-    public void HoldShootingObject(GameObject obj)
+    public void HoldShootingObject(GameObject obj) //shooting object is different than hold, shoot points rotation is different
     {
         holdingObject = obj;
         obj.transform.parent = shootingPoint;

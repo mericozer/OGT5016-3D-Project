@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EndingTextEditor : MonoBehaviour
 {
+    //Text editor for robot serial number change
+    
     [SerializeField] private TMP_Text finalText;
     // Start is called before the first frame update
     void Start()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShootingBall : MonoBehaviour
 {
+    //select the balls color value
     public enum BallColor
     {
         None,
@@ -16,11 +17,11 @@ public class ShootingBall : MonoBehaviour
     public BallColor color;
     
     private bool playerNear = false;
-    private bool inSequence = false;
-    private bool launched = false;
-    private bool inCircle = false;
+    private bool inSequence = false; //player is ready to shoot, holds the ball
+    private bool launched = false; //player sent the ball
+    private bool inCircle = false; //controls the after shooting, if ball is not in the pipe level failed
     
-    private float checkTime = 0f;
+    private float checkTime = 0f; //controls the time after shooting to check ball is in or not in a certain amount of time
 
     [SerializeField] private Collider coll;
 
@@ -38,7 +39,7 @@ public class ShootingBall : MonoBehaviour
     {
         if (playerNear)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E)) //player takes the ball
             {
                 if (!inSequence)
                 {
@@ -47,11 +48,11 @@ public class ShootingBall : MonoBehaviour
                     HoldState();
                     CanvasController.instance.ShootingState(true);
                     //projection.enabled = true;
-                    projection.ActivateLine();
+                    projection.ActivateLine(); //show projection line
                     
 
                 }
-                else
+                else //player puts the ball
                 {
                     Put();
                     //stop shooting sequence
@@ -61,10 +62,10 @@ public class ShootingBall : MonoBehaviour
 
             if (inSequence)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space)) //shooting
                 {
                     Shoot();
-                    projection.CleanLine();
+                    projection.CleanLine(); //projection line closed
                     PlayerController.instance.isShooting = false;
                     //projection.enabled = false;
                     StartCoroutine(ShootDelay());
@@ -118,7 +119,7 @@ public class ShootingBall : MonoBehaviour
         launched = true;
         rb.constraints = RigidbodyConstraints.None;
         float shootSpeed = CanvasController.instance.GetShootValue();
-        if (shootSpeed >= 26 && shootSpeed <= 34)
+        if (shootSpeed >= 26 && shootSpeed <= 34) //if player press space between these values, shot is done right and it needs to have the 30 speed value to go right
         {
             shootSpeed = 30;
         }

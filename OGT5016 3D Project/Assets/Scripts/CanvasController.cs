@@ -15,10 +15,10 @@ public class CanvasController : MonoBehaviour
     private int batteryColorValue = 0;
     
     private bool isGameRunning = true; //checks if game is running
-    private bool isShootingActive = false;
-    public bool shootingStart = false;
-    private bool shootUp = true;
-    [SerializeField] private bool haveShootBar;
+    private bool isShootingActive = false; //is shoot bar active
+    public bool shootingStart = false; //shooting started
+    private bool shootUp = true; //is shoot slider going up
+    [SerializeField] private bool haveShootBar; //not every level contains a shoot bar but every level use the same canvas controller
     
      [SerializeField] private Slider battery; //slider for battery(health)
      [SerializeField] private Slider shootSlider;
@@ -116,7 +116,7 @@ public class CanvasController : MonoBehaviour
             if (!shootingStart)
             {
                 shootSliderObject.SetActive(true);
-                shootSliderValue = 0f;
+                shootSliderValue = 0f; //shooting bar starts from zero
                 shootSlider.value = shootSliderValue;
                 
             }
@@ -159,7 +159,7 @@ public class CanvasController : MonoBehaviour
     }
     public void ShootingBar()
     {
-        if (shootUp)
+        if (shootUp) //slider increase
         {
             shootSliderValue += Time.deltaTime * shootSliderSpeed;
             shootSlider.value = shootSliderValue;
@@ -169,7 +169,7 @@ public class CanvasController : MonoBehaviour
                 shootUp = false;
             }
         }
-        else
+        else //slider decrease
         {
             shootSliderValue -= Time.deltaTime * shootSliderSpeed;
             shootSlider.value = shootSliderValue;
@@ -184,7 +184,7 @@ public class CanvasController : MonoBehaviour
 
     public float GetShootValue()
     {
-        //delay for slider can be activated
+        //player takes the shooting power from slider
         shootSliderObject.SetActive(false);
         isShootingActive = false;
         shootingStart = false;

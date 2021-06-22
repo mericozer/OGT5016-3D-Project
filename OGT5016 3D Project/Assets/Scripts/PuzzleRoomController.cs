@@ -5,14 +5,17 @@ using UnityEngine.Events;
 
 public class PuzzleRoomController : MonoBehaviour
 {
-    private int current = 0;
+    //level 2 sound puzzle room controller
+    //it checks whether correct sequence is played or not
+    
+    private int current = 0; //current button index
 
     [SerializeField] private GameObject hintText;
     
     private SoundButtonEnum currentButton;
     
-    [SerializeField] List<SoundButtonEnum> buttonList = new List<SoundButtonEnum>();
-    [SerializeField] private List<SoundButtonEnum> orderList = new List<SoundButtonEnum>();
+    [SerializeField] List<SoundButtonEnum> buttonList = new List<SoundButtonEnum>(); //all buttons
+    [SerializeField] private List<SoundButtonEnum> orderList = new List<SoundButtonEnum>(); //ordered sequence
     public List<int> orderNumber = new List<int>();
     
     public UnityEvent OnPressEvent;
@@ -27,10 +30,10 @@ public class PuzzleRoomController : MonoBehaviour
     {
         current = 0;
         int counter = 1;
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) 
         {
             counter = 1;
-            foreach (var button in buttonList)
+            foreach (var button in buttonList) //checks every button for every turn to order them
             {
                 Debug.Log("turning");
                 
@@ -54,7 +57,7 @@ public class PuzzleRoomController : MonoBehaviour
     {
         if (playerNear && !completed)
         {
-            if (orderList[current].isPressed)
+            if (orderList[current].isPressed) //if the correct button pressed change to the next button
             {
                 orderList[current].isTurn = false;
                 current++;

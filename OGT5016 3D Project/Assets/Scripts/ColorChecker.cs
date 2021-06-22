@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ColorChecker : MonoBehaviour
 {
+    //Level 3 pipe color checker
+    
+    //colors kept as enum 
     public enum BallColor
     {
         None,
@@ -13,12 +16,15 @@ public class ColorChecker : MonoBehaviour
         Blue
     }
 
-    public BallColor currentColor;
+    
+    public BallColor currentColor; //holds current color of pipe
 
-    private List<int> selectedColors = new List<int>();
+    private List<int> selectedColors = new List<int>(); //keeps the track of colors which is already selected for the pipe
 
-    private int counter;
+    
+    private int counter; //keeps the count of the balls in the pipe
 
+    //materials for pipe color
     private Material currentMaterial;
     [SerializeField] private Material redMat;
     [SerializeField] private Material greenMat;
@@ -41,6 +47,7 @@ public class ColorChecker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //color change slowly
         /*lerp = (Time.time - startTime) * colorChangeDuration;
         gameObject.GetComponent<MeshRenderer>().material.Lerp(currentMaterial, blueMat, lerp);
         if (lerp >= 1)
@@ -52,9 +59,9 @@ public class ColorChecker : MonoBehaviour
 
     void AdjustColor()
     {
-        if (counter < 4)
+        if (counter < 4) //if four balls are in level completed
         {
-            int color = Random.Range(1, 5);
+            int color = Random.Range(1, 5); //takes a value for 
 
             while (selectedColors.Contains(color))
             {
@@ -102,7 +109,7 @@ public class ColorChecker : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ball"))
+        if (other.CompareTag("Ball")) //checks if ball is in or not
         {
             if (other.gameObject.GetComponent<ShootingBall>().color.ToString().Equals(currentColor.ToString()))
             {

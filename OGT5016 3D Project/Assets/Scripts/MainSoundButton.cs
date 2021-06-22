@@ -29,7 +29,7 @@ public class MainSoundButton : MonoBehaviour
     void Start()
     {
         soundSource = GetComponent<AudioSource>();
-        soundOrder = roomController.orderNumber;
+        soundOrder = roomController.orderNumber; //takes the ordered sequence of sounds
 
         brownMat = button.GetComponent<MeshRenderer>().material;
     }
@@ -39,27 +39,7 @@ public class MainSoundButton : MonoBehaviour
     {
         if (playerNear)
         {
-            /*if (!isActive)
-            {
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    //StartCoroutine(PlaySound(0));
-                    
-                    delayTime = 0f;
-                    soundNumber = -1;
-                    playing = true;
-                    
-                    button.GetComponent<MeshRenderer>().material = greenMat;
-                    Debug.Log("Main Sound played");
-                }
-            
-            }
-            else
-            {
-                //play sound
-                CanvasController.instance.UpdateBatteryPercentage(-10, true);
-                Debug.Log("Main Sound played multiple");
-            }*/
+           
 
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -69,7 +49,7 @@ public class MainSoundButton : MonoBehaviour
                     
                 button.GetComponent<MeshRenderer>().material = greenMat;
                 
-                if (isActive)
+                if (isActive) //player plays the sequence more than one time, battery lost 10 unit
                 {
                     CanvasController.instance.UpdateBatteryPercentage(-10, true);
                 }
@@ -80,7 +60,7 @@ public class MainSoundButton : MonoBehaviour
             }
         }
 
-        if (playing)
+        if (playing) //plays the sequence
         {
             delayTime += Time.deltaTime;
             if (delayTime >= 1f)
@@ -127,30 +107,5 @@ public class MainSoundButton : MonoBehaviour
     
     
    
-    /*private IEnumerator PlaySound(int i)
-    {
-       /* if (i < soundOrder.Count)
-        {
-            Debug.Log("playing sound index is : " + i);
-            soundSource.PlayOneShot(audioList[soundOrder[i]]);
-            yield return new WaitForSeconds(1f);
-            StartCoroutine(PlaySound(i + 1));
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.2f);
-            //yield return null;
-        }
-
-       if (i == 3)
-       {
-           soundSource.PlayOneShot(audioList[soundOrder[i]]);
-           
-       }
-       else
-       {
-           StartCoroutine(PlaySound(i + 1));
-       }
-
-    }*/
+   
 }

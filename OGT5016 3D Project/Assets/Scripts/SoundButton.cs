@@ -7,7 +7,10 @@ using UnityEngine.UI;
 
 public class SoundButton : MonoBehaviour
 {
-    //DONT FORGET AUDIO SOURCE
+
+    //OLD SCRIPT FOR SOUND BUTTON
+    //NEW SCRIPT IS SOUNDBUTTONENUM
+    //NEW SCRIPT WORKS MORE DYNAMIC AND ADJUST THE PUZZLE ROOM CONTROLLERS CHECK LISTS
     
     [SerializeField] private GameObject nextButton;
     [SerializeField] private GameObject button;

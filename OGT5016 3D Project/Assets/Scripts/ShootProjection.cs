@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ShootProjection : MonoBehaviour
 {
-    //cannon example
+    //creates a line to show where to shoot
+    //it only shows a projection line of a correct shooting power
     private LineRenderer lineRenderer;
 
     [SerializeField] private int pointCount = 50;
@@ -31,7 +32,7 @@ public class ShootProjection : MonoBehaviour
     {
         if (shooting)
         {
-            lineRenderer.positionCount = (int) pointCount;
+            lineRenderer.positionCount = (int) pointCount; 
             List<Vector3> points = new List<Vector3>();
         
             //cannon shot point
@@ -39,13 +40,13 @@ public class ShootProjection : MonoBehaviour
             //cannon power
             Vector3 startingVelocity = shotPoint.forward * shootPower;
 
-            for (float t = 0; t < pointCount; t += timeBetweenPoints)
+            for (float t = 0; t < pointCount; t += timeBetweenPoints) //creates a line with fixed points
             {
                 Vector3 newPoint = startingPosition + t * startingVelocity;
-                newPoint.y = startingPosition.y + startingVelocity.y * t + Physics.gravity.y / 2f * t * t;
+                newPoint.y = startingPosition.y + startingVelocity.y * t + Physics.gravity.y / 2f * t * t; //calculates the points position according to velocity
                 points.Add(newPoint);
 
-                if (Physics.OverlapSphere(newPoint, 2, CollidableLayers).Length > 0)
+                if (Physics.OverlapSphere(newPoint, 2, CollidableLayers).Length > 0) //points stop if a selected layer is touched by the line
                 {
                     lineRenderer.positionCount = points.Count;
                     break;
@@ -58,7 +59,7 @@ public class ShootProjection : MonoBehaviour
        
     }
     
-    public void CleanLine()
+    public void CleanLine() //makes point vector values zero to delete the line
     {
         shooting = false;
         lineRenderer.positionCount = 0;

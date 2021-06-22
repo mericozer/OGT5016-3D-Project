@@ -13,7 +13,7 @@ public class ButtonActivation : MonoBehaviour
     private bool playerNear = false;
     private bool isPressed = false;
     
-    public AudioSource soundSource;
+    public AudioSource soundSource; //buttons have their own activation sound
     
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
@@ -51,7 +51,7 @@ public class ButtonActivation : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isPressed)
+        if (other.CompareTag("Player") && !isPressed) //if button is pressed once do not activate again
         {
             CanvasController.instance.CustomInteractiveText(true, "Press E for Button");
             playerNear = true;

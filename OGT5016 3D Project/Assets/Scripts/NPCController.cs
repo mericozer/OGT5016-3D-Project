@@ -32,7 +32,7 @@ public class NPCController : MonoBehaviour
         //string name = "test";
         for (int i = 0; i < dialog.sentences.Length; i++)
         {
-            if (dialog.sentences[i].Contains("nameText"))
+            if (dialog.sentences[i].Contains("nameText")) //robot character changes serial number every time it dies, dialog changes according to that
             {
                 //int index = dialog.sentences[i].IndexOf("nameText");
                 dialog.sentences[i] = dialog.sentences[i].Replace("nameText", name);

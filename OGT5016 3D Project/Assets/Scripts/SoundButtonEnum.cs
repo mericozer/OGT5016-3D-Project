@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SoundButtonEnum : MonoBehaviour
 {
+    //buttons order in the sequence can be selected
     public enum Order
     {
         First = 1,
@@ -18,16 +19,16 @@ public class SoundButtonEnum : MonoBehaviour
     public AudioSource soundSource;
     //public AudioClip[] audioList;
 
-    [SerializeField] private Material whiteMat;
-    [SerializeField] private Material activeMat;
+    [SerializeField] private Material whiteMat; //material while button is not active
+    [SerializeField] private Material activeMat; //while button is active
     
 
     [SerializeField] private GameObject button;
-    public bool isTurn;
-    public bool isPressed = false;
+    public bool isTurn; //if button have the turn
+    public bool isPressed = false; //if button is pressed
     private bool playerNear;
     private bool isActive = false;
-    private bool firstListen = true;
+    private bool firstListen = true; //if not first listen player losts 10 units from batery
     
     
     // Start is called before the first frame update
@@ -41,7 +42,12 @@ public class SoundButtonEnum : MonoBehaviour
     {
         if (playerNear)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            //the difference between activate and listen is
+            //player can listen many times
+            //but if player activates the button and it is the wrong button 
+            //test fails
+            
+            if (Input.GetKeyDown(KeyCode.E)) //activate
             {
                 if (isTurn)
                 {
@@ -54,21 +60,10 @@ public class SoundButtonEnum : MonoBehaviour
                 {
                     CanvasController.instance.FailLoseState();
                 }
-                /*if (isActive)
-                {
-                    
-                      
-                }
-                else 
-                {
-                    button.GetComponent<MeshRenderer>().material = activeMat;
-                    soundSource.Play();
-                    isActive = true;
-                }*/
-                
+
             }
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(KeyCode.F)) //listen
             {
                 button.GetComponent<MeshRenderer>().material = activeMat;
                 StartCoroutine(ListenDelay());
